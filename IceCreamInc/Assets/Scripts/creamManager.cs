@@ -7,6 +7,9 @@ public class creamManager : MonoBehaviour
     private Vector3 destinationPosition;
     private Vector3 destinationRotation;
     private Vector3 difference;
+
+    private Color[] colors = { Color.yellow, Color.white, Color.red };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,7 @@ public class creamManager : MonoBehaviour
         
     }
 
-    IEnumerator fallAnimation()
+    private IEnumerator fallAnimation()
     {
         while (true)
         {
@@ -37,6 +40,12 @@ public class creamManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+
+    public void UpdateColor(int colorIndex)
+    {
+        gameObject.GetComponent<Renderer>().material.color = colors[colorIndex];
     }
 
 }

@@ -1,0 +1,2 @@
+C:\Users\guvenluckyboy\Documents\GitHub\FlamingoDemo\IceCreamInc\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\guvenluckyboy\Documents\GitHub\FlamingoDemo\IceCreamInc\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

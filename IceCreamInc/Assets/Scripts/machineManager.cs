@@ -35,17 +35,26 @@ public class machineManager : MonoBehaviour
     {
         while (true)
         {
-            if (go && destination.localPosition.z > 0)
+            if (go)
             {
                 if (destination.localPosition.z > 0)
                 {
-                    GameObject creamTemp = Instantiate(cream, transform.position, Quaternion.identity);
+                    creamManager creamTemp = Instantiate(cream, transform.position, Quaternion.identity).GetComponent<creamManager>();
+                    creamTemp.UpdateColor(colorIndex);
+
+                    levelManager.singleton.addScore(colorIndex, Mathf.Abs(destination.localPosition.z));
+
                     anchor.Rotate(0, 6, 0);
                     destination.localPosition -= new Vector3(0, 0, 0.003f);
                     anchor.Translate(0, 0.004f, 0);
 
                     transform.position = new Vector3(destination.position.x, transform.position.y, destination.position.z);
                     yield return new WaitForSeconds(0.01f);
+                }
+                else
+                {
+                    gameManager.singleton.levelFinished();
+                    break;
                 }
             }
             yield return null;
