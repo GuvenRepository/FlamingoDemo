@@ -1,11 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+/* Current score doğru olan her durumda artıyor
+ * Max score doğru da olsa yanlış da olsa artıyor
+ * curren'ın max'a oranı da skoru veriyor
+*/
+
 
 public class levelManager : MonoBehaviour
 {
-    // Game Instance Singleton
+    // Level Manager Singleton
     private static levelManager instance = null;
     public static levelManager singleton
     {
@@ -15,13 +18,14 @@ public class levelManager : MonoBehaviour
         }
     }
 
+    //Constructor
     private levelManager()
     {
         instance = this;
     }
 
     [Range(0,1)]
-    public float threshold;
+    public float threshold; //İlk ve ikinci renk arasındaki sınır noktası
     public int firstColorIndex;
     public int secondColorIndex;
 
@@ -30,13 +34,17 @@ public class levelManager : MonoBehaviour
 
     public void addScore(int colorIndex, float currentDistance)
     {
-        if (gameManager.singleton.progress < threshold && colorIndex == firstColorIndex)
+        //Eğer pozisyon sınırdan küçükse dondurma renginin ilk renk olması gerek
+        if (gameManager.singleton.progress < threshold && colorIndex == firstColorIndex) 
             currentScore++;
+        //Eğer pozisyon sınırdan büyükse dondurma renginin ikinci renk olması gerek
         if (gameManager.singleton.progress > threshold && colorIndex == secondColorIndex)
             currentScore++;
+        //maxScore her iki durumda da artıyor
         maxScore++;
     }
 
+    //Current'ın maxa oranının yüzdelik hesabı
     public int getScore()
     {
         return Mathf.CeilToInt(currentScore * 100 / maxScore);

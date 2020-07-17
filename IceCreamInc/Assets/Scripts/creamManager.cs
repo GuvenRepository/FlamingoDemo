@@ -1,42 +1,38 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class creamManager : MonoBehaviour
 {
-    private Vector3 destinationPosition;
-    private Vector3 destinationRotation;
-    private Vector3 difference;
-
+    //Dondurma index-renk look-up table
     private Color[] colors = { Color.yellow, Color.white, Color.red };
 
-    // Start is called before the first frame update
     void Start()
     {
-        destinationPosition = gameManager.singleton.anchor.GetChild(0).position;
-        destinationRotation = gameManager.singleton.anchor.eulerAngles;
-        difference = destinationPosition - transform.position;
+        //Başlar başlamaz serbest düşüş
         StartCoroutine(fallAnimation());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // basit düşme animasyonu
     private IEnumerator fallAnimation()
     {
+        //düşülecek yer(destination position)
+        Vector3 destinationPosition = gameManager.singleton.anchor.GetChild(0).position;
+        //düşüleceği zaman olması gereken açı
+        Vector3 destinationRotation = gameManager.singleton.anchor.eulerAngles;
+        //animasyon başlangıç ve bitiş noktası arasındaki fark
+        Vector3 difference = destinationPosition - transform.position;
+
+
         while (true)
         {
-            if (Vector3.Distance(destinationPosition, transform.position) > 0.01f)
+            if (Vector3.Distance(destinationPosition, transform.position) > 0.01f) // hedefe varana dek devam
             {
-                transform.Translate(difference / 100);
+                transform.Translate(difference / 100); //100 adımda düşme hareketi
                 yield return new WaitForSeconds(0.001f);
             }
             else
             {
-                transform.localEulerAngles = destinationRotation + new Vector3(0,0,90);
+                transform.localEulerAngles = destinationRotation + new Vector3(0,0,90); // düştükten sonra 90 derce dön (yan yat)
                 break;
             }
         }
